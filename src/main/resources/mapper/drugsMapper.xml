@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.oracle.mapper.DrugMapper">
+    <resultMap id="getDrugs" type="com.oracle.entity.Drugs">
+        <id property="drugsid" column="drugsid"/>
+
+    </resultMap>
+    <select id="getDrugsList" resultMap="getDrugs" parameterType="com.oracle.entity.Drugs">
+        select * from drugs where 1=1
+        <if test="drugsname!=null and drugsname!=''">
+            and drugsname like '%${drugsname}%'
+        </if>
+    </select>
+
+
+</mapper>

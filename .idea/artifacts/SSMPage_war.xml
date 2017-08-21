@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="SSMPage:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <root id="archive" name="SSMPage.war">
+      <element id="artifact" artifact-name="SSMPage:war exploded" />
+    </root>
+  </artifact>
+</component>

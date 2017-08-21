@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.oracle.mapper.JiezhenMapper">
+
+    <resultMap id="getPatients" type="com.oracle.entity.Patients">
+        <id property="guahao_id" column="gauhaoid"/>
+        <result property="hospital_id" column="hospitalid"/>
+        <result property="guahao_type" column="guahaotype"/>
+        <result property="guahao_date" column="guahaodate"/>
+        <result property="patient_id" column="patientid"/>
+    </resultMap>
+
+    <select id="getAllPatients" resultMap="getPatients" parameterType="com.oracle.entity.Patients">
+        select * from patients where 1=1
+        <if test="name!=null and name!=''">
+            and name like '%${name}%'
+        </if>
+    </select>
+
+</mapper>

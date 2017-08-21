@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.oracle.mapper.ZhuyuanMapper">
+
+    <resultMap id="getPatients" type="com.oracle.entity.Zhuyuan">
+        <id property="patient_id" column="patient_id"/>
+    </resultMap>
+
+    <select id="getPatients" resultMap="getPatients" parameterType="com.oracle.entity.Zhuyuan">
+        select * from zhuyuan where 1=1
+        <if test="name!=null and name!=''">
+            and name like '%${name}%'
+        </if>
+    </select>
+    <resultMap id="getCharge" type="com.oracle.entity.Charge">
+        <id property="patient_id" column="patient_id"/>
+    </resultMap>
+
+    <select id="getCharge" resultMap="getCharge" parameterType="com.oracle.entity.Charge">
+        select * from Charge where 1=1
+        <if test="name!=null and name!=''">
+            and name like '%${name}%'
+        </if>
+    </select>
+</mapper>

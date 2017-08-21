@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.oracle.mapper.HospitalMapper">
+    <resultMap id="loginMap" type="com.oracle.entity.Login">
+        <id property="userid" column="userid"/>
+    </resultMap>
+    <select id="loginByNameAndPassword" resultMap="loginMap" parameterType="com.oracle.entity.Login">
+        select * from login where
+        userid = #{userid} and employeeid=#{employeeid} AND username=#{username}
+        and password = #{password}
+    </select>
+    <update id="updatePassword" parameterType="com.oracle.entity.Login">
+        update login set password=#{password}where  username = #{username}
+    </update>
+    <select id="getAll" resultMap="loginMap" parameterType="com.oracle.entity.Login">
+    select * from login where  username=#{username} and password = #{password}
+</select>
+    <resultMap id="getPatients" type="com.oracle.entity.Patients">
+        <id property="guahao_id" column="gauhaoid"/>
+        <result property="hospital_id" column="hospitalid"/>
+        <result property="guahao_type" column="guahaotype"/>
+        <result property="guahao_date" column="guahaodate"/>
+        <result property="patient_id" column="patientid"/>
+    </resultMap>
+
+    <select id="getAllPatients" resultMap="getPatients" parameterType="com.oracle.entity.Patients">
+        select * from patients where 1=1
+      <if test="guahao_id!=null and guahao_id!=''">
+            and guahao_id like '%${guahao_id}%'
+         </if>
+    </select>
+    <!-- 根据分页数据start 和size查询数据 -->
+    <select id="findByPage" parameterType="Map" resultType="com.oracle.entity.Patients">
+        select * from patients where 1=1
+        <if test="guahao_id!=null and guahao_id!=''">
+            and guahao_id like '%${guahao_id}%'
+        </if>
+        <if test="start!=null and !size=null">
+            limit #{start},#{size}
+        </if>
+    </select>
+
+    <!-- 查询用户记录总数 -->
+    <select id="selectCount" resultMap="getPatients" resultType="int">
+        select count(*) from patients WHERE 1=1
+        <if test="guahao_id!=null and guahao_id!=''">
+            and guahao_id like '%${guahao_id}%'
+        </if>
+    </select>
+    <insert id="addguahao" parameterType="com.oracle.entity.Patients">
+       insert into patients(guahao_id,hospital_id,guahao_type,name,sex,age,guahao_date,patient_id)
+       values(#{guahao_id},#{hospital_id},#{guahao_type},#{name},#{sex},#{age},#{guahao_date},#{patient_id})
+    </insert>
+<delete id="delguahao" parameterType="com.oracle.entity.Patients">
+     delete from patients where guahao_id=#{guahao_id}
+</delete>
+</mapper>
